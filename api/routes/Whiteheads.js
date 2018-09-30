@@ -15,7 +15,7 @@ router.get("/", (req, res, next) => {
         AcneType: "Whiteheads Acne",
         Description: "Whiteheads are noninflammatory acne that can be formed when pores get clogged by sebum, dead skin cells, and dirt clog yoour pores. Unlikely blackheads, the top of the pore closes up and it looks like a small bump protruding from the skin.",
         Causes: "Some common causes are: Your forehead is one of the most common areas to get spots. The notorious T-zone (forehead, nose, chin) produces more sebum than the rest of your face and hair follicles on your forehead tend to be bigger than others, making the perfect recipe for forehead breakouts. Forehead whiteheads may also be the result of wearing a cap or helmet. If you sweat while wearing them and then leave them to their own devices, they become a breeding ground for bacteria. The cloth that touches your forehead should be sanitized on a regular basis. Other Causes: anxiety, extreme stress, family history of acne, menopause, menstruation, puberty, overly dry skin (usually from using too many acne products), wearing oil-based skin products and makeup.",      
-        WhiteheadTreatments: docs.map(doc => {
+        Treatments: docs.map(doc => {
           return {
             TreatmentType: doc.TreatmentType,
             Name:doc.Name,

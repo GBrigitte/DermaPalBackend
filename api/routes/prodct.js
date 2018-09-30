@@ -19,8 +19,7 @@ router.get("/", (req, res, next) => {
           return {
             TreatmentType: doc.TreatmentType,
             Name:doc.Name,
-            Description:doc.Description,
-
+            Description:doc.Description
           };
         })
       });
@@ -142,4 +141,3 @@ router.delete("/:pustuleID", (req, res, next) => {
       });
       
       module.exports = router;
-      
