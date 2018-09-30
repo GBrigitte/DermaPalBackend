@@ -18,7 +18,7 @@ router.get("/", (req, res, next) => {
 
   CysticAcne.find()
 
-    .select("TreatmentType Name Description")
+    .select("TreatmentType Name Description Product Brand Instructions")
 
     .exec()
 
@@ -40,8 +40,11 @@ router.get("/", (req, res, next) => {
 
             Name:doc.Name,
 
-            Description:doc.Description
-
+            Description:doc.Description,
+            Product:doc.Product,
+            Brand:doc.Brand,
+            Instructions:doc.Instructions,
+            
           };
 
         })
@@ -75,6 +78,9 @@ router.post("/", (req, res, next) => {
         Name: req.body.Name,
 
         Description:req.body.Description,
+        Product:req.body.Product,
+        Brand:req.body.Brand,
+        Instructions:req.body.Instructions,
 
       });
 
@@ -99,6 +105,9 @@ router.post("/", (req, res, next) => {
                 Description:result.Description,
 
                 _id: result._id,
+                Product:result.Product,
+                Brand:result.Brand,
+                Instructions:result.Instructions,
 
                 request: {
 

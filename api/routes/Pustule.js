@@ -8,7 +8,7 @@ const Pustule = require("../models/Pustule");
 // Handle incoming GET requests to /PUSTULEACNE
 router.get("/", (req, res, next) => {
   Pustule.find()
-    .select("TreatmentType Name Description")
+    .select("TreatmentType Name Description Product Brand Instructions")
     .exec()
     .then(docs => {
       res.status(200).json({
@@ -22,7 +22,8 @@ router.get("/", (req, res, next) => {
             Description:doc.Description,
             Product:doc.Product,
             Brand:doc.Brand,
-            Instructions:doc.Instructions
+            Instructions:doc.Instructions,
+            
 
           };
         })
