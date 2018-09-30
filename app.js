@@ -9,6 +9,9 @@ const treatmntsRoutes = require("./api/routes/treatmnts");
 const WhiteheadRoutes = require("./api/routes/Whiteheads");
 const CysticAcnRoutes = require("./api/routes/Cyst");
 const PustuleRoutes = require("./api/routes/Pustule");
+const PRoutes = require("./api/routes/prodct");
+
+
 
 mongoose.connect(
   "mongodb://dvillam:Dvillam1@mydatabase-shard-00-00-qfbc5.mongodb.net:27017,mydatabase-shard-00-01-qfbc5.mongodb.net:27017,mydatabase-shard-00-02-qfbc5.mongodb.net:27017/test?ssl=true&replicaSet=MyDatabase-shard-0&authSource=admin&retryWrites=true",
@@ -42,7 +45,7 @@ app.use("/treatmnts", treatmntsRoutes);
 app.use("/Whiteheads", WhiteheadRoutes);
 app.use("/Cyst", CysticAcnRoutes);
 app.use("/Pustule", PustuleRoutes);
-
+app.use("/prodct", PRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Not found");

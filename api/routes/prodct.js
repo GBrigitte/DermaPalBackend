@@ -2,24 +2,23 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 
-const Pustule = require("../models/Pustule");
+const Prodct = require("../models/prodct");
 
 
-// Handle incoming GET requests to /PUSTULEACNE
+// Handle incoming GET requests to /PRODUCTS
 router.get("/", (req, res, next) => {
-  Pustule.find()
-    .select("TreatmentType Name Description")
+  Prodct.find()
+    .select("acnetype name brand Description instructions")
     .exec()
     .then(docs => {
       res.status(200).json({
-        AcneType: "Pustule Acne",
-        Description: "Papules or pimples occur when the walls surrounding the pores break down from severe inflammation. This results in hard, clogged pores that are tender to the touch. The skin around these pores is usually pink. Pustules that suddenly erupt all over the face or in patches on various parts of the body may indicate that you have a bacterial infection. Contact your doctor if you have a sudden outbreak of pustules. You should also call your doctor if your pustules are painful or leaking fluid. These may be symptoms of a serious skin infection.",
-        Causes: "Pustules may form when your skin becomes inflamed as a result of an allergic reaction to food, environmental allergens, or poisonous insect bites. However, the most common cause of pustules is acne. Acne develops when the pores of your skin become clogged with oil and dead skin cells. This blockage causes patches of skin to bulge, resulting in a pustule. Pustules usually contain pus due to an infection of the pore cavity. Pustules caused by acne can become hard and painful. When this occurs, the pustule becomes a cyst. This condition is known as cystic acne.",
         Treatments: docs.map(doc => {
           return {
-            TreatmentType: doc.TreatmentType,
-            Name:doc.Name,
-            Description:doc.Description
+            acnetype:doc.acnetype,
+            name: doc.name,
+            brand:doc.brand,
+            Description:doc.Description,
+            instructions:doc.instructions
           };
         })
       });
@@ -32,26 +31,30 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-      const pustule = new Pustule({
+      const prodct = new Prodct({
         _id: new mongoose.Types.ObjectId(),
-        TreatmentType:req.body.TreatmentType,
-        Name: req.body.Name,
+        acnetype:req.body.acnetype,
+        name:req.body.name,
+        brand: req.body.brand,
         Description:req.body.Description,
+        instructions:req.body.instructions
       });
-      pustule
+      prodct
         .save()
         .then(result => {
           console.log(result);
           res.status(201).json({
             message: "Created successfully",
-            PustuleTreatments: {
-                TreatmentType:result.TreatmentType,
-                Name: result.Name,
+            Products: {
+              acnetype:result.acnetype,
+                name:result.name,
+                brand: result.brand,
                 Description:result.Description,
+                instructions:result.instructions,
                 _id: result._id,
                 request: {
                     type: 'GET',
-                    url: "http://localhost:3001/Pustule/" + result._id
+                    url: "http://localhost:3001/prodct/" + result._id
                 }
             }
           });
@@ -65,20 +68,16 @@ router.post("/", (req, res, next) => {
 });
 
 
-router.get("/:pustuleID", (req, res, next) => {
-        const id = req.params.pustuleID;
-        Pustule.findById(id)
-          .select('TreatmentType Name Description')
+router.get("/:prodctID", (req, res, next) => {
+        const id = req.params.prodctID;
+        Prodct.find({"acnetype":id})
+          .select('acnetype name brand Description instructions')
           .exec()
           .then(doc => {
             console.log("From database", doc);
             if (doc) {
               res.status(200).json({
-                  pustule: doc,
-                  request: {
-                      type: 'GET',
-                      url: 'http://localhost:3001/Pustule'
-                  }
+                  products: doc,
               });
             } else {
               res
@@ -93,20 +92,20 @@ router.get("/:pustuleID", (req, res, next) => {
 });
       
 
-router.patch("/:pustuleID", (req, res, next) => {
-        const id = req.params.pustuleID;
+router.patch("/:prodctID", (req, res, next) => {
+        const id = req.params.prodctID;
         const updateOps = {};
         for (const ops of req.body) {
           updateOps[ops.propName] = ops.value;
         }
-        Pustule.update({ _id: id }, { $set: updateOps })
+        Prodct.update({ _id: id }, { $set: updateOps })
           .exec()
           .then(result => {
             res.status(200).json({
                 message: 'Updated',
                 request: {
                     type: 'GET',
-                    url: 'http://localhost:3001/Pustule/' + id
+                    url: 'http://localhost:3001/prodct/' + id
                 }
             });
           })
@@ -119,16 +118,16 @@ router.patch("/:pustuleID", (req, res, next) => {
 });
       
 
-router.delete("/:pustuleID", (req, res, next) => {
-        const id = req.params.pustuleID;
-        Pustule.remove({ _id: id })
+router.delete("/:prodctID", (req, res, next) => {
+        const id = req.params.prodctID;
+        Prodct.remove({ _id: id })
           .exec()
           .then(result => {
             res.status(200).json({
                 message: 'Deleted',
                 request: {
                     type: 'POST',
-                    url: 'http://localhost:3001/Pustule'
+                    url: 'http://localhost:3001/prodct'
                 }
             });
           })
