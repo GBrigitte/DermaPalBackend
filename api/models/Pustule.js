@@ -5,6 +5,10 @@ const PustulesSchema = mongoose.Schema({
     TreatmentType:String,
     Name:String,
     Description:String,
+    Product:String,
+    Brand:String,
+    Instructions:String
+    
 });
 
 module.exports = mongoose.model('Pustule', PustulesSchema);

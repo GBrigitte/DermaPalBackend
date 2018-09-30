@@ -1,0 +1,11 @@
+const mongoose = require('mongoose');
+
+const noneSchema = mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+    TreatmentType:String,
+    Name:String,
+    Description:String,
+    
+});
+
+module.exports = mongoose.model('None', noneSchema);

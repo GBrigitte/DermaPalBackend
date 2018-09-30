@@ -10,6 +10,7 @@ const WhiteheadRoutes = require("./api/routes/Whiteheads");
 const CysticAcnRoutes = require("./api/routes/Cyst");
 const PustuleRoutes = require("./api/routes/Pustule");
 const PRoutes = require("./api/routes/prodct");
+const NRoutes = require("./api/routes/None");
 
 
 
@@ -46,6 +47,7 @@ app.use("/Whiteheads", WhiteheadRoutes);
 app.use("/Cyst", CysticAcnRoutes);
 app.use("/Pustule", PustuleRoutes);
 app.use("/prodct", PRoutes);
+app.use("/None", NRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Not found");
